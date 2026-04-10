@@ -2,14 +2,14 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>АвтоПлан | База данных записей</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>АвтоПлан | База данных</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: system-ui, 'Segoe UI', 'Inter', 'Roboto', sans-serif;
+            font-family: system-ui, 'Segoe UI', sans-serif;
         }
 
         body {
@@ -18,7 +18,8 @@
             padding: 20px;
         }
 
-        .login-screen {
+        /* ЭКРАН ВХОДА */
+        .login-overlay {
             position: fixed;
             top: 0;
             left: 0;
@@ -28,11 +29,11 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 2000;
+            z-index: 9999;
         }
 
-        .login-card {
-            background: rgba(255,255,255,0.97);
+        .login-box {
+            background: white;
             border-radius: 64px;
             padding: 48px 40px;
             max-width: 440px;
@@ -41,23 +42,22 @@
             box-shadow: 0 30px 50px rgba(0,0,0,0.5);
         }
 
-        .login-card h2 {
+        .login-box h2 {
             font-size: 2rem;
             color: #1a3b44;
             margin-bottom: 12px;
         }
 
-        .login-input {
+        .login-box input {
             width: 100%;
             padding: 16px 20px;
             font-size: 1.1rem;
             border: 2px solid #d0dee8;
             border-radius: 60px;
-            outline: none;
-            margin-bottom: 20px;
+            margin: 20px 0;
         }
 
-        .login-btn {
+        .login-box button {
             background: #1f4e5e;
             color: white;
             border: none;
@@ -69,11 +69,19 @@
             cursor: pointer;
         }
 
-        .login-btn:hover { background: #0f3a46; }
-        .error-msg { color: #c44536; font-size: 0.85rem; margin-top: 16px; }
+        .login-box button:hover {
+            background: #0f3a46;
+        }
 
-        .main-app { 
-            display: none; 
+        .error-msg {
+            color: #c44536;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+
+        /* ОСНОВНОЕ ПРИЛОЖЕНИЕ */
+        .main-app {
+            display: none;
             max-width: 1400px;
             margin: 0 auto;
         }
@@ -92,7 +100,7 @@
         .stat-card {
             text-align: center;
             flex: 1;
-            min-width: 150px;
+            min-width: 120px;
         }
 
         .stat-number {
@@ -101,41 +109,10 @@
             color: #1f4e5e;
         }
 
-        .stat-label {
-            font-size: 0.85rem;
-            color: #6c8a97;
-            margin-top: 5px;
-        }
-
-        .controls {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .search-box {
-            flex: 1;
-            padding: 12px 20px;
-            border: 2px solid #d0dee8;
-            border-radius: 60px;
-            font-size: 1rem;
-            outline: none;
-        }
-
-        .filter-select {
-            padding: 12px 20px;
-            border: 2px solid #d0dee8;
-            border-radius: 60px;
-            background: white;
-            cursor: pointer;
-        }
-
         .card {
-            background: rgba(255, 255, 255, 0.98);
+            background: white;
             border-radius: 56px;
             overflow: hidden;
-            margin-bottom: 20px;
         }
 
         .header {
@@ -146,11 +123,10 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 15px;
         }
 
         .logout-btn {
-            background: rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.2);
             border: none;
             padding: 10px 20px;
             border-radius: 40px;
@@ -162,68 +138,76 @@
             padding: 32px;
         }
 
-        .voice-main-area {
+        .voice-area {
             background: #f0f4fa;
             border-radius: 48px;
-            padding: 20px 24px;
+            padding: 24px;
             margin-bottom: 28px;
         }
 
-        .mic-button {
+        .mic-btn {
             background: #1e3b46;
             border: none;
             width: 100%;
             padding: 18px;
             border-radius: 100px;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: bold;
             color: white;
             cursor: pointer;
-            transition: 0.15s;
         }
 
-        .mic-button.listening {
+        .mic-btn.listening {
             background: #c44536;
-            animation: pulse 1.2s infinite;
+            animation: pulse 1s infinite;
         }
 
         @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.85; }
-            100% { opacity: 1; }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
 
-        .voice-status-box {
+        .transcript-box {
             background: white;
-            border-radius: 40px;
-            padding: 14px 20px;
-            margin-top: 18px;
+            border-radius: 32px;
+            padding: 15px 20px;
+            margin-top: 15px;
             border-left: 5px solid #2c7da0;
         }
 
-        .full-transcript-area {
-            background: #e9f0f5;
-            border-radius: 28px;
-            padding: 12px 20px;
-            margin-top: 12px;
-        }
-
-        button.primary {
+        .save-btn {
             background: #0f2b36;
             width: 100%;
             border: none;
             padding: 16px;
             border-radius: 60px;
             font-size: 1.1rem;
-            font-weight: 700;
+            font-weight: bold;
             color: white;
             cursor: pointer;
-            margin: 16px 0;
+            margin: 20px 0;
         }
 
-        .records-table {
-            width: 100%;
-            overflow-x: auto;
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 2px solid #d0dee8;
+            border-radius: 60px;
+            font-size: 1rem;
+        }
+
+        .filter-select {
+            padding: 12px 20px;
+            border: 2px solid #d0dee8;
+            border-radius: 60px;
+            background: white;
         }
 
         table {
@@ -240,24 +224,18 @@
         th {
             background: #f8fafd;
             color: #1f4e5e;
-            font-weight: 700;
         }
 
         .delete-btn {
             background: #c44536;
             color: white;
             border: none;
-            padding: 6px 12px;
+            padding: 5px 12px;
             border-radius: 20px;
             cursor: pointer;
-            font-size: 0.8rem;
         }
 
-        .delete-btn:hover {
-            background: #a03224;
-        }
-
-        .toast-msg {
+        .toast {
             position: fixed;
             bottom: 30px;
             left: 50%;
@@ -267,104 +245,74 @@
             padding: 12px 24px;
             border-radius: 60px;
             opacity: 0;
-            transition: opacity 0.2s;
+            transition: opacity 0.3s;
+            z-index: 10000;
             pointer-events: none;
-            z-index: 3000;
-        }
-
-        .admin-badge {
-            background: #eab308;
-            padding: 4px 12px;
-            border-radius: 40px;
-            font-size: 0.7rem;
-            font-weight: bold;
-        }
-
-        @media (max-width: 768px) {
-            th, td {
-                padding: 10px;
-                font-size: 0.85rem;
-            }
-            .content {
-                padding: 20px;
-            }
         }
     </style>
 </head>
 <body>
 
-<div class="login-screen" id="loginScreen">
-    <div class="login-card">
-        <h2>🔐 АвтоПлан PRO</h2>
-        <p>База данных автосервиса</p>
-        <input type="password" id="passwordInput" class="login-input" placeholder="Введите пароль">
-        <button class="login-btn" id="loginBtn">🔓 Войти</button>
-        <div id="loginError" class="error-msg"></div>
+<!-- ЭКРАН ВХОДА -->
+<div id="loginOverlay" class="login-overlay">
+    <div class="login-box">
+        <h2>🔐 АвтоПлан</h2>
+        <p>Вход для руководителя</p>
+        <input type="password" id="passwordInput" placeholder="Введите пароль">
+        <button id="loginBtn">Войти</button>
+        <div id="errorMsg" class="error-msg"></div>
     </div>
 </div>
 
-<div class="main-app" id="mainApp">
-    <div class="stats-bar" id="statsBar">
+<!-- ОСНОВНОЕ ПРИЛОЖЕНИЕ -->
+<div id="mainApp" class="main-app">
+    <div class="stats-bar">
         <div class="stat-card">
             <div class="stat-number" id="totalCount">0</div>
-            <div class="stat-label">Всего записей</div>
+            <div>Всего записей</div>
         </div>
         <div class="stat-card">
             <div class="stat-number" id="todayCount">0</div>
-            <div class="stat-label">За сегодня</div>
+            <div>За сегодня</div>
         </div>
         <div class="stat-card">
             <div class="stat-number" id="weekCount">0</div>
-            <div class="stat-label">За неделю</div>
+            <div>За неделю</div>
         </div>
     </div>
 
     <div class="card">
         <div class="header">
             <h1>🔧 АвтоПлан | База данных</h1>
-            <button class="logout-btn" id="logoutBtn">🚪 Выйти</button>
+            <button id="logoutBtn" class="logout-btn">🚪 Выйти</button>
         </div>
         <div class="content">
-            <div class="voice-main-area">
-                <button class="mic-button" id="mainMicBtn">
-                    🎙️ Голосовая запись в базу данных
-                </button>
-                <div class="voice-status-box" id="voiceStatusBox">
-                    💡 Скажите фразу, запись сохранится в базу данных
-                </div>
-                <div class="full-transcript-area">
-                    📝 <strong>Распознанный текст:</strong> <span id="recognizedFullText">—</span>
+            <div class="voice-area">
+                <button id="micBtn" class="mic-btn">🎙️ Голосовая запись</button>
+                <div class="transcript-box">
+                    <strong>📝 Распознанный текст:</strong><br>
+                    <span id="transcriptText">—</span>
                 </div>
             </div>
 
-            <button class="primary" id="confirmRecordBtn">
-                💾 Сохранить в базу данных и отправить на почту
-            </button>
+            <button id="saveBtn" class="save-btn">💾 Сохранить в базу и отправить на почту</button>
 
             <div class="controls">
-                <input type="text" id="searchInput" class="search-box" placeholder="🔍 Поиск по записям...">
+                <input type="text" id="searchInput" class="search-input" placeholder="🔍 Поиск...">
                 <select id="filterSelect" class="filter-select">
                     <option value="all">Все записи</option>
                     <option value="today">Сегодня</option>
                     <option value="week">Эта неделя</option>
-                    <option value="month">Этот месяц</option>
                 </select>
             </div>
 
-            <div class="records-table">
-                <table id="recordsTable">
+            <div style="overflow-x: auto;">
+                <table>
                     <thead>
-                        <tr>
-                            <th>Дата</th>
-                            <th>Время</th>
-                            <th>Текст записи</th>
-                            <th>Действия</th>
-                        </tr>
+                        <tr><th>Дата</th><th>Время</th><th>Текст</th><th></th></tr>
                     </thead>
-                    <tbody id="recordsTableBody">
-                        <tr>
-                            <td colspan="4" style="text-align: center;">Загрузка данных...</td>
-                        </tr>
+                    <tbody id="tableBody">
+                        <tr><td colspan="4" style="text-align:center;">Загрузка...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -372,81 +320,137 @@
     </div>
 </div>
 
-<div id="toastMsg" class="toast-msg"></div>
+<div id="toast" class="toast"></div>
 
 <script>
-    const MASTER_PASSWORD = "BossAuto2025";
-    let currentFullTranscript = "";
+    // ========== ПАРОЛЬ ==========
+    const PASSWORD = "BossAuto2025";
+    
+    // ========== ПЕРЕМЕННЫЕ ==========
+    let currentTranscript = "";
     let recognition = null;
     let isListening = false;
     let db = null;
-
-    // Инициализация IndexedDB
-    function initDatabase() {
-        return new Promise((resolve, reject) => {
-            const request = indexedDB.open("AutoPlanDB", 1);
-            
-            request.onerror = function(event) {
-                console.error("Ошибка БД:", event);
-                reject("Не удалось открыть базу данных");
-            };
-            
-            request.onsuccess = function(event) {
-                db = event.target.result;
-                console.log("База данных открыта");
-                loadRecords();
-                resolve();
-            };
-            
-            request.onupgradeneeded = function(event) {
-                const db = event.target.result;
-                if (!db.objectStoreNames.contains("appointments")) {
-                    const store = db.createObjectStore("appointments", { keyPath: "id", autoIncrement: true });
-                    store.createIndex("date", "date", { unique: false });
-                    store.createIndex("createdAt", "createdAt", { unique: false });
-                    console.log("Таблица создана");
-                }
-            };
-        });
+    
+    // ========== ЭЛЕМЕНТЫ ==========
+    const loginOverlay = document.getElementById('loginOverlay');
+    const mainApp = document.getElementById('mainApp');
+    const passwordInput = document.getElementById('passwordInput');
+    const loginBtn = document.getElementById('loginBtn');
+    const errorMsg = document.getElementById('errorMsg');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const micBtn = document.getElementById('micBtn');
+    const saveBtn = document.getElementById('saveBtn');
+    const transcriptSpan = document.getElementById('transcriptText');
+    const searchInput = document.getElementById('searchInput');
+    const filterSelect = document.getElementById('filterSelect');
+    const tableBody = document.getElementById('tableBody');
+    const totalSpan = document.getElementById('totalCount');
+    const todaySpan = document.getElementById('todayCount');
+    const weekSpan = document.getElementById('weekCount');
+    const toast = document.getElementById('toast');
+    
+    // ========== ФУНКЦИИ ==========
+    function showToast(msg) {
+        toast.textContent = msg;
+        toast.style.opacity = '1';
+        setTimeout(() => toast.style.opacity = '0', 3000);
     }
-
-    // Сохранить запись в БД
-    async function saveToDatabase(record) {
+    
+    // ВХОД
+    function doLogin() {
+        const pass = passwordInput.value;
+        console.log('Пароль:', pass);
+        
+        if (pass === PASSWORD) {
+            localStorage.setItem('auth', 'true');
+            loginOverlay.style.display = 'none';
+            mainApp.style.display = 'block';
+            initDatabase();
+            initSpeech();
+            showToast('✅ Добро пожаловать!');
+        } else {
+            errorMsg.textContent = '❌ Неверный пароль!';
+            setTimeout(() => errorMsg.textContent = '', 2000);
+        }
+    }
+    
+    // ВЫХОД
+    function doLogout() {
+        localStorage.removeItem('auth');
+        loginOverlay.style.display = 'flex';
+        mainApp.style.display = 'none';
+        if (recognition && isListening) recognition.stop();
+        showToast('🔒 Вы вышли');
+    }
+    
+    // ПРОВЕРКА АВТОРИЗАЦИИ
+    function checkAuth() {
+        const auth = localStorage.getItem('auth');
+        if (auth === 'true') {
+            loginOverlay.style.display = 'none';
+            mainApp.style.display = 'block';
+            initDatabase();
+            initSpeech();
+        } else {
+            loginOverlay.style.display = 'flex';
+            mainApp.style.display = 'none';
+        }
+    }
+    
+    // ========== БАЗА ДАННЫХ (IndexedDB) ==========
+    function initDatabase() {
+        const request = indexedDB.open("AutoPlanDB", 2);
+        
+        request.onerror = function() {
+            showToast('❌ Ошибка открытия БД');
+        };
+        
+        request.onsuccess = function(event) {
+            db = event.target.result;
+            console.log('БД открыта');
+            loadRecords();
+        };
+        
+        request.onupgradeneeded = function(event) {
+            db = event.target.result;
+            if (!db.objectStoreNames.contains("records")) {
+                const store = db.createObjectStore("records", { keyPath: "id", autoIncrement: true });
+                store.createIndex("date", "date");
+                store.createIndex("createdAt", "createdAt");
+                console.log('Таблица создана');
+            }
+        };
+    }
+    
+    function saveRecordToDB(text) {
         return new Promise((resolve, reject) => {
             if (!db) {
-                reject("База данных не инициализирована");
+                reject('Нет БД');
                 return;
             }
             
-            const transaction = db.transaction(["appointments"], "readwrite");
-            const store = transaction.objectStore("appointments");
+            const transaction = db.transaction(["records"], "readwrite");
+            const store = transaction.objectStore("records");
             
-            const newRecord = {
-                text: record.text,
+            const record = {
+                text: text,
                 date: new Date().toISOString().split('T')[0],
                 time: new Date().toLocaleTimeString('ru-RU'),
-                createdAt: Date.now(),
-                fullDate: new Date().toISOString()
+                createdAt: Date.now()
             };
             
-            const request = store.add(newRecord);
-            
-            request.onsuccess = function() {
-                resolve();
-            };
-            
-            request.onerror = function() {
-                reject(request.error);
-            };
+            const request = store.add(record);
+            request.onsuccess = () => resolve();
+            request.onerror = () => reject(request.error);
         });
     }
-
-    // Загрузить записи из БД
-    function loadRecords(filter = "all", search = "") {
+    
+    function loadRecords() {
         if (!db) return;
         
-        const transaction = db.transaction(["appointments"], "readonly");
-        const store = transaction.objectStore("appointments");
+        const transaction = db.transaction(["records"], "readonly");
+        const store = transaction.objectStore("records");
         const index = store.index("createdAt");
         const request = index.openCursor(null, "prev");
         
@@ -458,184 +462,180 @@
                 records.push(cursor.value);
                 cursor.continue();
             } else {
-                displayRecords(records, filter, search);
+                applyFilterAndSearch(records);
                 updateStats(records);
             }
         };
     }
-
-    // Отобразить записи
-    function displayRecords(records, filter, search) {
-        let filtered = [...records];
+    
+    function applyFilterAndSearch(records) {
+        const filter = filterSelect.value;
+        const search = searchInput.value.toLowerCase();
         const now = new Date();
         const today = now.toISOString().split('T')[0];
         const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-        const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
         
-        // Фильтрация
-        switch(filter) {
-            case "today":
-                filtered = records.filter(r => r.date === today);
-                break;
-            case "week":
-                filtered = records.filter(r => new Date(r.createdAt) >= weekAgo);
-                break;
-            case "month":
-                filtered = records.filter(r => new Date(r.createdAt) >= monthAgo);
-                break;
+        let filtered = [...records];
+        
+        if (filter === 'today') {
+            filtered = filtered.filter(r => r.date === today);
+        } else if (filter === 'week') {
+            filtered = filtered.filter(r => new Date(r.createdAt) >= weekAgo);
         }
         
-        // Поиск
         if (search) {
-            const searchLower = search.toLowerCase();
-            filtered = filtered.filter(r => r.text.toLowerCase().includes(searchLower));
+            filtered = filtered.filter(r => r.text.toLowerCase().includes(search));
         }
         
-        // Отображение в таблице
-        const tbody = document.getElementById("recordsTableBody");
-        if (filtered.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="4" style="text-align: center;">📭 Нет записей</td></tr>';
+        renderTable(filtered);
+    }
+    
+    function renderTable(records) {
+        if (records.length === 0) {
+            tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center;">📭 Нет записей</td></tr>';
             return;
         }
         
-        tbody.innerHTML = filtered.map(record => `
+        tableBody.innerHTML = records.map(record => `
             <tr>
                 <td>${record.date}</td>
                 <td>${record.time}</td>
                 <td>${escapeHtml(record.text)}</td>
-                <td><button class="delete-btn" onclick="deleteRecord(${record.id})">🗑️ Удалить</button></td>
+                <td><button class="delete-btn" onclick="deleteRecord(${record.id})">🗑️</button></td>
             </tr>
         `).join('');
     }
-
-    // Удалить запись
+    
     window.deleteRecord = function(id) {
         if (!db) return;
-        
-        const transaction = db.transaction(["appointments"], "readwrite");
-        const store = transaction.objectStore("appointments");
-        const request = store.delete(id);
-        
-        request.onsuccess = function() {
-            showToast("✅ Запись удалена");
-            loadRecords(document.getElementById("filterSelect").value, document.getElementById("searchInput").value);
-        };
-        
-        request.onerror = function() {
-            showToast("❌ Ошибка удаления");
+        const transaction = db.transaction(["records"], "readwrite");
+        const store = transaction.objectStore("records");
+        store.delete(id);
+        transaction.oncomplete = () => {
+            showToast('✅ Удалено');
+            loadRecords();
         };
     };
-
-    // Обновить статистику
+    
     function updateStats(records) {
         const now = new Date();
         const today = now.toISOString().split('T')[0];
         const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
         
-        const todayCount = records.filter(r => r.date === today).length;
-        const weekCount = records.filter(r => new Date(r.createdAt) >= weekAgo).length;
-        
-        document.getElementById("totalCount").textContent = records.length;
-        document.getElementById("todayCount").textContent = todayCount;
-        document.getElementById("weekCount").textContent = weekCount;
+        totalSpan.textContent = records.length;
+        todaySpan.textContent = records.filter(r => r.date === today).length;
+        weekSpan.textContent = records.filter(r => new Date(r.createdAt) >= weekAgo).length;
     }
-
-    // Отправить email
+    
+    function escapeHtml(str) {
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+    
+    // ========== ОТПРАВКА НА ПОЧТУ ==========
     async function sendEmail(text) {
-        const email = "vimana-avto@yandex.ru";
-        const subject = `[АВТОСЕРВИС] Новая запись в БД: ${text.substring(0, 50)}`;
-        const body = `🔧 НОВАЯ ЗАПИСЬ В БАЗЕ ДАННЫХ\n\n📝 Текст: ${text}\n\n🕐 Дата: ${new Date().toLocaleString('ru-RU')}\n\nСохранено в базе данных АвтоПлан.`;
-        
         try {
             const response = await fetch("https://formsubmit.co/ajax/vimana-avto@yandex.ru", {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    _subject: subject,
-                    message: body,
+                    _subject: `[АВТОСЕРВИС] Запись: ${text.substring(0, 50)}`,
+                    message: `🔧 НОВАЯ ЗАПИСЬ\n\n${text}\n\nДата: ${new Date().toLocaleString('ru-RU')}`,
                     _captcha: "false"
                 })
             });
             return response.ok;
-        } catch(err) {
-            console.error(err);
+        } catch(e) {
             return false;
         }
     }
-
-    // Сохранить запись
-    async function saveRecord() {
-        if (!currentFullTranscript || currentFullTranscript.trim() === "") {
-            showToast("❌ Сначала скажите фразу в микрофон");
+    
+    // ========== СОХРАНЕНИЕ ==========
+    async function saveCurrent() {
+        if (!currentTranscript || currentTranscript.trim() === '') {
+            showToast('❌ Сначала скажите фразу в микрофон');
             return;
         }
         
         try {
-            await saveToDatabase({ text: currentFullTranscript });
-            await sendEmail(currentFullTranscript);
-            
-            showToast("✅ Запись сохранена в БД и отправлена на почту");
-            loadRecords(document.getElementById("filterSelect").value, document.getElementById("searchInput").value);
-            
-            // Очищаем текущий текст
-            currentFullTranscript = "";
-            document.getElementById("recognizedFullText").textContent = "—";
-        } catch(error) {
-            showToast("❌ Ошибка сохранения: " + error);
+            await saveRecordToDB(currentTranscript);
+            const emailSent = await sendEmail(currentTranscript);
+            showToast(emailSent ? '✅ Сохранено в БД и отправлено на почту' : '⚠️ Сохранено в БД, но письмо не ушло');
+            currentTranscript = '';
+            transcriptSpan.textContent = '—';
+            loadRecords();
+        } catch(e) {
+            showToast('❌ Ошибка сохранения');
         }
     }
-
-    // Голосовое распознавание
+    
+    // ========== ГОЛОС ==========
     function initSpeech() {
         if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-            document.getElementById("voiceStatusBox").innerHTML = '⚠️ Ваш браузер не поддерживает голосовой ввод';
+            transcriptSpan.innerHTML = '❌ Ваш браузер не поддерживает голосовой ввод';
             return;
         }
         
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         recognition = new SpeechRecognition();
+        recognition.lang = 'ru-RU';
         recognition.continuous = false;
         recognition.interimResults = false;
-        recognition.lang = 'ru-RU';
         
-        recognition.onstart = function() {
+        recognition.onstart = () => {
             isListening = true;
-            document.getElementById("mainMicBtn").classList.add('listening');
-            document.getElementById("voiceStatusBox").innerHTML = '🎤 Слушаю... Говорите чётко';
+            micBtn.classList.add('listening');
+            micBtn.textContent = '🔴 Слушаю...';
         };
         
-        recognition.onresult = function(event) {
-            const transcript = event.results[0][0].transcript;
-            currentFullTranscript = transcript;
-            document.getElementById("recognizedFullText").textContent = transcript;
-            document.getElementById("voiceStatusBox").innerHTML = `✅ Распознано: "${transcript.substring(0, 80)}"`;
-            showToast('🎙️ Текст распознан, нажмите "Сохранить"');
+        recognition.onresult = (event) => {
+            const text = event.results[0][0].transcript;
+            currentTranscript = text;
+            transcriptSpan.textContent = text;
+            showToast('🎙️ Текст распознан');
         };
         
-        recognition.onerror = function(event) {
+        recognition.onerror = () => {
+            micBtn.classList.remove('listening');
+            micBtn.textContent = '🎙️ Голосовая запись';
+            showToast('⚠️ Ошибка, попробуйте ещё раз');
+        };
+        
+        recognition.onend = () => {
             isListening = false;
-            document.getElementById("mainMicBtn").classList.remove('listening');
-            document.getElementById("voiceStatusBox").innerHTML = '⚠️ Ошибка распознавания. Попробуйте ещё раз';
-        };
-        
-        recognition.onend = function() {
-            isListening = false;
-            document.getElementById("mainMicBtn").classList.remove('listening');
+            micBtn.classList.remove('listening');
+            micBtn.textContent = '🎙️ Голосовая запись';
         };
     }
     
     function startListening() {
         if (!recognition) {
-            showToast('Голосовое распознавание не поддерживается');
+            showToast('Голос не поддерживается');
             return;
         }
-        if (isListening) {
-            try { recognition.stop(); } catch(e) {}
-        }
+        if (isListening) recognition.stop();
         try {
             recognition.start();
         } catch(e) {
-            showToast('Ошибка запуска микрофона');
+            showToast('Разрешите доступ к микрофону');
         }
     }
     
+    // ========== ОБРАБОТЧИКИ ==========
+    loginBtn.addEventListener('click', doLogin);
+    logoutBtn.addEventListener('click', doLogout);
+    micBtn.addEventListener('click', startListening);
+    saveBtn.addEventListener('click', saveCurrent);
+    searchInput.addEventListener('input', () => loadRecords());
+    filterSelect.addEventListener('change', () => loadRecords());
+    passwordInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') doLogin(); });
+    
+    // ========== ЗАПУСК ==========
+    checkAuth();
+</script>
+</body>
+</html>    
