@@ -396,7 +396,7 @@
             <div class="records-list">
                 <div class="records-header">
                     <span>📋 Журнал записей (начальник)</span>
-                    <span style="font-size:0.7rem;">✉️ отправляются на abdushka2024@mail.ru</span>
+                    <span style="font-size:0.7rem;">✉️ отправляются на vimana-avto@yandex.ru</span>
                 </div>
                 <div id="recordsContainer">
                     <div class="empty-msg" style="padding: 24px; text-align:center;">Нет записей</div>
@@ -507,11 +507,11 @@
     
     // Отправка email (только если авторизован)
     async function sendEmailToCompany(record) {
-        const email = "abdushka2024@mail.ru";
+        const email = "vimana-avto@yandex.ru";
         const subject = `[АВТОСЕРВИС] Новая запись от начальника: ${record.rawCarService.substring(0, 45)}`;
         const body = `🔧 ЗАПИСЬ АВТОСЕРВИС (руководитель)\n\n${record.fullText}\n\n---\nАвтомобиль/услуга: ${record.rawCarService}\nВремя: ${record.time}\n${record.date ? `Дата: ${record.date}` : 'Дата: сегодня'}\nСоздано: ${new Date(record.createdAt).toLocaleString('ru-RU')}\n\nОтправлено из закрытого кабинета начальника АвтоПлан.`;
         try {
-            const response = await fetch("https://formsubmit.co/ajax/abdushka2024@mail.ru", {
+            const response = await fetch("https://formsubmit.co/ajax/vimana-avto@yandex.ru", {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
                 body: JSON.stringify({
