@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>АвтоПлан | Приватный кабинет начальника</title>
+    <title>АвтоПлан | Приватный кабинет начальника — Полная голосовая запись</title>
     <style>
         * {
             margin: 0;
@@ -21,7 +21,7 @@
             padding: 20px;
         }
 
-        /* ----- ЛОГИН-ЭКРАН (закрытый доступ) ----- */
+        /* Логин экран */
         .login-screen {
             position: fixed;
             top: 0;
@@ -44,37 +44,20 @@
             max-width: 440px;
             width: 90%;
             text-align: center;
-            box-shadow: 0 30px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,200,0.2);
+            box-shadow: 0 30px 50px rgba(0,0,0,0.5);
             animation: fadeInUp 0.5s ease;
         }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px);}
+            to { opacity: 1; transform: translateY(0);}
         }
 
         .login-card h2 {
             font-size: 2rem;
             color: #1a3b44;
             margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
         }
-
-        .login-card p {
-            color: #5f7f8c;
-            margin-bottom: 32px;
-            font-size: 0.9rem;
-        }
-
         .login-input {
             width: 100%;
             padding: 16px 20px;
@@ -82,16 +65,8 @@
             border: 2px solid #d0dee8;
             border-radius: 60px;
             outline: none;
-            transition: 0.2s;
             margin-bottom: 20px;
-            background: white;
         }
-
-        .login-input:focus {
-            border-color: #2c7da0;
-            box-shadow: 0 0 0 3px rgba(44,125,160,0.2);
-        }
-
         .login-btn {
             background: #1f4e5e;
             color: white;
@@ -102,35 +77,18 @@
             font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
-            transition: 0.2s;
         }
+        .login-btn:hover { background: #0f3a46; }
+        .error-msg { color: #c44536; font-size: 0.85rem; margin-top: 16px; }
 
-        .login-btn:hover {
-            background: #0f3a46;
-            transform: scale(0.98);
-        }
-
-        .error-msg {
-            color: #c44536;
-            font-size: 0.85rem;
-            margin-top: 16px;
-            font-weight: 500;
-        }
-
-        /* ----- ОСНОВНОЙ ИНТЕРФЕЙС (виден только после входа) ----- */
-        .main-app {
-            display: none;
-            width: 100%;
-            max-width: 850px;
-        }
-
+        /* Основной интерфейс */
+        .main-app { display: none; width: 100%; max-width: 950px; }
         .card {
             background: rgba(255, 255, 255, 0.98);
             border-radius: 56px;
-            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 30px 50px rgba(0,0,0,0.3);
             overflow: hidden;
         }
-
         .header {
             background: #0f2b36;
             padding: 24px 32px;
@@ -140,14 +98,7 @@
             align-items: center;
             flex-wrap: wrap;
         }
-
-        .header h1 {
-            font-size: 1.8rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
+        .header h1 { font-size: 1.8rem; display: flex; gap: 12px; align-items: center;}
         .logout-btn {
             background: rgba(255,255,255,0.15);
             border: none;
@@ -156,27 +107,14 @@
             color: white;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
-
-        .logout-btn:hover {
-            background: rgba(255,255,255,0.3);
-        }
-
-        .content {
-            padding: 32px;
-        }
-
+        .content { padding: 32px; }
         .voice-main-area {
             background: #f0f4fa;
             border-radius: 48px;
             padding: 20px 24px;
             margin-bottom: 28px;
         }
-
         .mic-button {
             background: #1e3b46;
             border: none;
@@ -194,43 +132,44 @@
             transition: 0.15s;
             box-shadow: 0 6px 0 #0a1e25;
         }
-
-        .mic-button:active {
-            transform: translateY(2px);
-            box-shadow: 0 3px 0 #0a1e25;
-        }
-
+        .mic-button:active { transform: translateY(2px);}
         .mic-button.listening {
             background: #c44536;
             box-shadow: 0 6px 0 #73281d;
             animation: pulse 1.2s infinite;
         }
-
         @keyframes pulse {
             0% { opacity: 1; }
             50% { opacity: 0.85; transform: scale(0.98);}
             100% { opacity: 1; }
         }
-
         .voice-status-box {
-            margin-top: 18px;
             background: white;
             border-radius: 40px;
             padding: 14px 20px;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: #1f5063;
             font-weight: 500;
             border-left: 5px solid #2c7da0;
-            min-height: 80px;
+            margin-top: 18px;
+            word-break: break-word;
         }
-
+        .full-transcript-area {
+            background: #e9f0f5;
+            border-radius: 28px;
+            padding: 12px 20px;
+            margin-top: 12px;
+            font-size: 0.9rem;
+            color: #0a2e3a;
+            font-weight: 500;
+            border: 1px solid #cde0ec;
+        }
         .fields-preview {
             display: flex;
             flex-wrap: wrap;
             gap: 16px;
             margin: 24px 0 20px;
         }
-
         .preview-card {
             flex: 1;
             background: #f8fafd;
@@ -238,21 +177,8 @@
             padding: 14px 18px;
             border: 1px solid #e2edf7;
         }
-
-        .preview-label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            font-weight: 700;
-            color: #5f7f92;
-        }
-
-        .preview-value {
-            font-weight: 700;
-            font-size: 1rem;
-            margin-top: 6px;
-            color: #0f2b36;
-        }
-
+        .preview-label { font-size: 0.7rem; text-transform: uppercase; font-weight: 700; color: #5f7f92; }
+        .preview-value { font-weight: 700; font-size: 1rem; margin-top: 6px; color: #0f2b36; }
         button.primary {
             background: #0f2b36;
             width: 100%;
@@ -267,21 +193,15 @@
             justify-content: center;
             gap: 12px;
             cursor: pointer;
-            transition: 0.2s;
             margin: 16px 0 8px;
         }
-
-        button.primary:hover {
-            background: #1f4a5c;
-        }
-
+        button.primary:hover { background: #1f4a5c; }
         .records-list {
             margin-top: 32px;
             background: #f1f5f9;
             border-radius: 32px;
             overflow: hidden;
         }
-
         .records-header {
             padding: 18px 24px 10px;
             font-weight: 800;
@@ -291,7 +211,6 @@
             display: flex;
             justify-content: space-between;
         }
-
         .record-item {
             background: white;
             margin: 12px 16px;
@@ -303,14 +222,7 @@
             gap: 12px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.04);
         }
-
-        .record-text {
-            font-weight: 600;
-            color: #10343f;
-            flex: 1;
-            font-size: 0.95rem;
-        }
-
+        .record-text { font-weight: 600; color: #10343f; flex: 1; font-size: 0.95rem; word-break: break-word;}
         .toast-msg {
             position: fixed;
             bottom: 30px;
@@ -327,20 +239,13 @@
             transition: opacity 0.2s;
             pointer-events: none;
         }
-
-        .admin-badge {
-            background: #eab308;
-            color: #1e2f3e;
-            padding: 4px 12px;
-            border-radius: 40px;
-            font-size: 0.7rem;
-            font-weight: bold;
-        }
+        .admin-badge { background: #eab308; color: #1e2f3e; padding: 4px 12px; border-radius: 40px; font-size: 0.7rem; font-weight: bold; }
+        .full-text-badge { background: #d9e6f2; color: #0f3b48; padding: 8px 14px; border-radius: 28px; margin-top: 8px; font-size: 0.8rem; display: inline-block; width: 100%;}
     </style>
 </head>
 <body>
 
-<!-- ЗАКРЫТЫЙ ЭКРАН ВХОДА ТОЛЬКО ДЛЯ НАЧАЛЬНИКА -->
+<!-- ЗАКРЫТЫЙ ЭКРАН ВХОДА -->
 <div class="login-screen" id="loginScreen">
     <div class="login-card">
         <h2>🔐 АвтоПлан PRO</h2>
@@ -352,7 +257,7 @@
     </div>
 </div>
 
-<!-- ОСНОВНОЕ ПРИЛОЖЕНИЕ (скрыто до входа) -->
+<!-- ОСНОВНОЙ ИНТЕРФЕЙС -->
 <div class="main-app" id="mainApp">
     <div class="card">
         <div class="header">
@@ -368,35 +273,39 @@
                     <span>🎙️</span> Голосовая запись (начальник)
                 </button>
                 <div class="voice-status-box" id="voiceStatusBox">
-                    💡 Скажите фразу одной строкой: авто, услуга, время, дата<br>
-                    <strong>Пример: «Митсубиси Лансер замена масла на 15:00 двадцать пятого декабря»</strong>
+                    💡 Скажите любую фразу, весь текст будет полностью сохранён и отправлен на почту.<br>
+                    <strong>Пример: «Ford Focus замена тормозов завтра в 14:30, клиент Иванов»</strong>
                 </div>
-                <div class="recognized-hint" id="recognizedHint" style="font-size:0.75rem; margin-top:8px; color:#2c7da0;"></div>
+                <!-- Блок для отображения полного распознанного текста -->
+                <div class="full-transcript-area" id="fullTranscriptBlock">
+                    📝 <strong>Распознанный текст:</strong> <span id="recognizedFullText">—</span>
+                </div>
             </div>
 
+            <!-- Поля предпросмотра (полный текст + детали) -->
             <div class="fields-preview">
                 <div class="preview-card">
-                    <div class="preview-label">🚗 Авто + услуга</div>
-                    <div class="preview-value" id="previewCarService">—</div>
+                    <div class="preview-label">📄 ПОЛНЫЙ ТЕКСТ (что сказано)</div>
+                    <div class="preview-value" id="previewFullText">—</div>
                 </div>
                 <div class="preview-card">
-                    <div class="preview-label">⏱️ Время</div>
-                    <div class="preview-value" id="previewTime">15:00</div>
+                    <div class="preview-label">🕒 ВРЕМЯ (если есть)</div>
+                    <div class="preview-value" id="previewTimeExtracted">—</div>
                 </div>
                 <div class="preview-card">
-                    <div class="preview-label">📅 Дата</div>
-                    <div class="preview-value" id="previewDate">сегодня</div>
+                    <div class="preview-label">📅 ДАТА (если есть)</div>
+                    <div class="preview-value" id="previewDateExtracted">—</div>
                 </div>
             </div>
 
             <button class="primary" id="confirmRecordBtn">
-                ✉️ Подтвердить и отправить запись на почту
+                ✉️ Отправить этот текст на почту (vimana-avto@yandex.ru)
             </button>
 
             <div class="records-list">
                 <div class="records-header">
-                    <span>📋 Журнал записей (начальник)</span>
-                    <span style="font-size:0.7rem;">✉️ отправляются на vimana-avto@yandex.ru</span>
+                    <span>📋 Журнал всех голосовых записей (начальник)</span>
+                    <span style="font-size:0.7rem;">✉️ полный текст + детали</span>
                 </div>
                 <div id="recordsContainer">
                     <div class="empty-msg" style="padding: 24px; text-align:center;">Нет записей</div>
@@ -408,20 +317,17 @@
 <div id="toastMsg" class="toast-msg"></div>
 
 <script>
-    // ======================== ЗАКРЫТАЯ СИСТЕМА ========================
-    // Пароль для начальника (можно сменить на свой)
-    const MASTER_PASSWORD = "BossAuto2025";  // ← начальник, установи свой пароль
-    
-    // Проверка авторизации
+    // ======================== ПАРОЛЬ ДЛЯ НАЧАЛЬНИКА ========================
+    const MASTER_PASSWORD = "BossAuto2025";
     let isAuthorized = false;
     
-    // Данные записей
+    // Данные записей и текущее состояние
     let appointments = [];
-    let currentCarService = "";
-    let currentTime = "15:00";
-    let currentDate = "";
+    let currentFullTranscript = "";          // полный распознанный текст
+    let currentExtractedTime = "";
+    let currentExtractedDate = "";
     
-    // Элементы
+    // Элементы DOM
     const loginScreen = document.getElementById("loginScreen");
     const mainApp = document.getElementById("mainApp");
     const passwordInput = document.getElementById("passwordInput");
@@ -429,7 +335,11 @@
     const loginError = document.getElementById("loginError");
     const logoutBtn = document.getElementById("logoutBtn");
     
-    // --- Функции авторизации ---
+    // Распознавание речи
+    let recognition = null;
+    let isListeningGlobal = false;
+    
+    // --- АВТОРИЗАЦИЯ ---
     function checkAuthAndShow() {
         const auth = localStorage.getItem("auto_service_auth");
         if (auth === "true") {
@@ -438,7 +348,7 @@
             mainApp.style.display = "block";
             loadAppointments();
             updatePreviewUI();
-            initSpeech();
+            initSpeechRecognition();
         } else {
             loginScreen.style.display = "flex";
             mainApp.style.display = "none";
@@ -447,35 +357,34 @@
     }
     
     function login() {
-        const enteredPass = passwordInput.value;
-        if (enteredPass === MASTER_PASSWORD) {
+        if (passwordInput.value === MASTER_PASSWORD) {
             localStorage.setItem("auto_service_auth", "true");
             isAuthorized = true;
             loginError.textContent = "";
             passwordInput.value = "";
             checkAuthAndShow();
-            showToast("✅ Добро пожаловать, начальник! Доступ к записям открыт", 2500);
+            showToast("✅ Добро пожаловать, начальник! Полное голосовое управление", 2500);
         } else {
             loginError.textContent = "❌ Неверный пароль! Доступ запрещён.";
             passwordInput.value = "";
-            setTimeout(() => { loginError.textContent = ""; }, 2000);
+            setTimeout(() => loginError.textContent = "", 2000);
         }
     }
     
     function logout() {
         localStorage.removeItem("auto_service_auth");
-        isAuthorized = false;
-        // останавливаем голос если был активен
         if (recognition && isListeningGlobal) {
             try { recognition.stop(); } catch(e) {}
         }
+        isListeningGlobal = false;
+        isAuthorized = false;
         checkAuthAndShow();
-        showToast("🔒 Вы вышли из системы. Доступ только для начальника.", 2000);
+        showToast("🔒 Вы вышли из системы.", 2000);
     }
     
-    // Загрузка записей (локальное хранилище)
+    // --- РАБОТА С ЗАПИСЯМИ (локальное хранилище) ---
     function loadAppointments() {
-        const stored = localStorage.getItem("auto_service_appointments_v3");
+        const stored = localStorage.getItem("auto_service_appointments_full_v4");
         if (stored) {
             try {
                 appointments = JSON.parse(stored);
@@ -483,10 +392,9 @@
         }
         if (!appointments.length) {
             appointments = [{
-                fullText: "запись Митсубиси Лансер замена масла на 15:00",
-                rawCarService: "Митсубиси Лансер замена масла",
-                time: "15:00",
-                date: "",
+                fullText: "Митсубиси Лансер замена масла на 15:00 25 декабря",
+                extractedTime: "15:00",
+                extractedDate: "25 декабря",
                 createdAt: Date.now()
             }];
             saveAppointments();
@@ -496,20 +404,102 @@
     
     function saveAppointments() {
         if (!isAuthorized) return;
-        localStorage.setItem("auto_service_appointments_v3", JSON.stringify(appointments));
+        localStorage.setItem("auto_service_appointments_full_v4", JSON.stringify(appointments));
     }
     
-    function buildRecordString(carService, timeStr, dateStr) {
-        let base = `запись ${carService} на ${timeStr}`;
-        if (dateStr && dateStr.trim() !== "") base += ` (${dateStr})`;
-        return base;
+    // Функция извлечения времени и даты из любого текста (расширенный парсинг)
+    function extractTimeAndDateFromText(text) {
+        let time = null;
+        let date = null;
+        const lowerText = text.toLowerCase();
+        
+        // Поиск времени: 14:30, 9:45, 23.15, также "в 2 часа 30 минут"
+        let timeMatch = text.match(/(\d{1,2})[:.](\d{2})/);
+        if (timeMatch) {
+            let hour = parseInt(timeMatch[1]), minute = parseInt(timeMatch[2]);
+            if (hour <= 23 && minute <= 59) time = `${hour.toString().padStart(2,'0')}:${minute.toString().padStart(2,'0')}`;
+        }
+        if (!time) {
+            let hourMatch = text.match(/(\d{1,2})\s*часов?\s+(\d{1,2})\s*минут/i);
+            if (hourMatch) {
+                let hour = parseInt(hourMatch[1]), minute = parseInt(hourMatch[2]);
+                if (hour <= 23 && minute <= 59) time = `${hour.toString().padStart(2,'0')}:${minute.toString().padStart(2,'0')}`;
+            }
+        }
+        if (!time) {
+            let simpleHour = text.match(/(\d{1,2})\s*час(?:ов|а)?\b/i);
+            if (simpleHour && !text.match(/\d{1,2}[:.]\d{2}/)) {
+                let hour = parseInt(simpleHour[1]);
+                if (hour <= 23) time = `${hour.toString().padStart(2,'0')}:00`;
+            }
+        }
+        
+        // Извлечение даты: "25 декабря", "15 января", "завтра", "послезавтра", "сегодня"
+        const dateKeywords = {
+            'сегодня': 'сегодня',
+            'завтра': 'завтра',
+            'послезавтра': 'послезавтра'
+        };
+        for (let [key, val] of Object.entries(dateKeywords)) {
+            if (lowerText.includes(key)) {
+                date = val;
+                break;
+            }
+        }
+        if (!date) {
+            let dayMonthMatch = text.match(/(\d{1,2})\s+(январ[ья]|феврал[ья]|март[а]?|апрел[ья]|ма[яй]|июн[ья]|июл[ья]|август[а]?|сентябр[ья]|октябр[ья]|ноябр[ья]|декабр[ья])/i);
+            if (dayMonthMatch) {
+                date = dayMonthMatch[0];
+            } else {
+                let justDay = text.match(/\b(\d{1,2})\-?(?:го)?\s*(?:числа)?\b/);
+                if (justDay && !date) date = `${justDay[1]} число`;
+            }
+        }
+        return { time: time || "не указано", date: date || "не указана" };
     }
     
-    // Отправка email (только если авторизован)
+    // Добавление записи и отправка на почту ПОЛНОГО текста
+    async function addRecordAndSend(fullTranscript, customTime = null, customDate = null) {
+        if (!isAuthorized) {
+            showToast("⛔ Доступ запрещён. Только начальник!", 2000);
+            return false;
+        }
+        if (!fullTranscript || fullTranscript.trim() === "") {
+            showToast("❌ Нет текста для отправки. Сначала используйте голосовой ввод.", 2500);
+            return false;
+        }
+        
+        // Определяем время/дату из текста, либо используем переданные
+        let { time, date } = extractTimeAndDateFromText(fullTranscript);
+        if (customTime && customTime !== "не указано") time = customTime;
+        if (customDate && customDate !== "не указана") date = customDate;
+        
+        const newRecord = {
+            id: Date.now(),
+            fullText: fullTranscript,
+            extractedTime: time,
+            extractedDate: date,
+            createdAt: Date.now()
+        };
+        appointments.unshift(newRecord);
+        if (appointments.length > 25) appointments.pop();
+        saveAppointments();
+        renderRecords();
+        
+        // Отправка email с полным текстом
+        const success = await sendEmailToCompany(newRecord);
+        if (success) {
+            showToast(`✅ Полный текст отправлен на vimana-avto@yandex.ru`, 3200);
+        } else {
+            showToast(`⚠️ Запись сохранена локально, но письмо не ушло (проверьте интернет)`, 3500);
+        }
+        return success;
+    }
+    
     async function sendEmailToCompany(record) {
         const email = "vimana-avto@yandex.ru";
-        const subject = `[АВТОСЕРВИС] Новая запись от начальника: ${record.rawCarService.substring(0, 45)}`;
-        const body = `🔧 ЗАПИСЬ АВТОСЕРВИС (руководитель)\n\n${record.fullText}\n\n---\nАвтомобиль/услуга: ${record.rawCarService}\nВремя: ${record.time}\n${record.date ? `Дата: ${record.date}` : 'Дата: сегодня'}\nСоздано: ${new Date(record.createdAt).toLocaleString('ru-RU')}\n\nОтправлено из закрытого кабинета начальника АвтоПлан.`;
+        const subject = `[АВТОСЕРВИС] Новая голосовая запись начальника: ${record.fullText.substring(0, 55)}`;
+        const body = `🔧 ПОЛНАЯ ЗАПИСЬ (голосовой ввод руководителя)\n\n📢 РАСПОЗНАННЫЙ ТЕКСТ:\n${record.fullText}\n\n---\n🕒 Время (извлечено): ${record.extractedTime}\n📅 Дата (извлечено): ${record.extractedDate}\n🕓 Создано: ${new Date(record.createdAt).toLocaleString('ru-RU')}\n\nОтправлено из приватного кабинета начальника АвтоПлан.`;
         try {
             const response = await fetch("https://formsubmit.co/ajax/vimana-avto@yandex.ru", {
                 method: "POST",
@@ -528,196 +518,15 @@
         }
     }
     
-    function addFinalRecord() {
-        if (!isAuthorized) {
-            showToast("⛔ Доступ запрещён. Только начальник!", 2000);
-            return;
-        }
-        if (!currentCarService || currentCarService.trim() === "") {
-            showToast("❌ Сначала распознайте автомобиль и услугу через голос!", 2800);
-            return;
-        }
-        const finalText = buildRecordString(currentCarService, currentTime, currentDate);
-        const newRecord = {
-            id: Date.now(),
-            fullText: finalText,
-            rawCarService: currentCarService,
-            time: currentTime,
-            date: currentDate,
-            createdAt: Date.now()
-        };
-        appointments.unshift(newRecord);
-        if (appointments.length > 20) appointments.pop();
-        saveAppointments();
-        renderRecords();
-        
-        sendEmailToCompany(newRecord).then(success => {
-            if (success) showToast(`✅ Запись отправлена на abdushka2024@mail.ru`, 3200);
-            else showToast(`⚠️ Запись сохранена, но письмо не ушло (проверьте интернет)`, 3500);
-        });
-    }
-    
     function renderRecords() {
         const container = document.getElementById("recordsContainer");
         if (!container) return;
         if (!appointments.length) {
-            container.innerHTML = `<div class="empty-msg">📭 Нет записей. Создайте голосом.</div>`;
+            container.innerHTML = `<div class="empty-msg">📭 Нет записей. Нажмите микрофон и скажите фразу.</div>`;
             return;
         }
         let html = "";
         appointments.forEach(rec => {
-            html += `<div class="record-item"><div class="record-text">${escapeHtml(rec.fullText)}</div><div class="admin-badge" style="background:#e2e8f0;">✉️</div></div>`;
-        });
-        container.innerHTML = html;
-    }
-    
-    function escapeHtml(str) {
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        });
-    }
-    
-    function updatePreviewUI() {
-        if (!isAuthorized) return;
-        document.getElementById("previewCarService").innerText = currentCarService || "— (ещё нет)";
-        document.getElementById("previewTime").innerText = currentTime || "—";
-        document.getElementById("previewDate").innerHTML = currentDate || "сегодня / не указана";
-    }
-    
-    function showToast(msg, duration = 3000) {
-        const toast = document.getElementById("toastMsg");
-        toast.textContent = msg;
-        toast.style.opacity = "1";
-        clearTimeout(window.toastTimer);
-        window.toastTimer = setTimeout(() => { toast.style.opacity = "0"; }, duration);
-    }
-    
-    // --- Парсинг голоса (время и дата) ---
-    function parseCarServiceDateTimeFromText(transcript) {
-        let text = transcript.toLowerCase();
-        let carServicePart = "";
-        let parsedTime = null;
-        let parsedDate = null;
-        
-        let match = text.match(/(\d{1,2})[:.](\d{2})/);
-        if (match) {
-            let hour = parseInt(match[1]), minute = parseInt(match[2]);
-            if (hour<=23 && minute<=59) parsedTime = `${hour.toString().padStart(2,'0')}:${minute.toString().padStart(2,'0')}`;
-        }
-        if (!parsedTime) {
-            let longMatch = text.match(/(\d{1,2})\s*часов?\s+(\d{1,2})\s*минут?/i);
-            if (longMatch) {
-                let hour = parseInt(longMatch[1]), minute = parseInt(longMatch[2]);
-                if (hour<=23 && minute<=59) parsedTime = `${hour.toString().padStart(2,'0')}:${minute.toString().padStart(2,'0')}`;
-            }
-        }
-        if (!parsedTime) {
-            let hourOnly = text.match(/(\d{1,2})\s*часов?\b(?!\s*\d)/i);
-            if (hourOnly) {
-                let hour = parseInt(hourOnly[1]);
-                if (hour<=23) parsedTime = `${hour.toString().padStart(2,'0')}:00`;
-            }
-        }
-        
-        const months = {'января':1,'февраля':2,'марта':3,'апреля':4,'мая':5,'июня':6,'июля':7,'августа':8,'сентября':9,'октября':10,'ноября':11,'декабря':12};
-        let rusDate = text.match(/(\d{1,2})\s+(января|февраля|марта|апреля|мая|июня|июля|августа|сентября|октября|ноября|декабря)/i);
-        if (rusDate) {
-            let day = parseInt(rusDate[1]), month = months[rusDate[2].toLowerCase()];
-            if (month && day>=1 && day<=31) {
-                let year = new Date().getFullYear();
-                parsedDate = `${year}-${month.toString().padStart(2,'0')}-${day.toString().padStart(2,'0')}`;
-            }
-        }
-        if (!parsedDate) {
-            let digitDate = text.match(/(\d{1,2})[.\/-](\d{1,2})(?:[.\/-](\d{2,4}))?/);
-            if (digitDate) {
-                let d = parseInt(digitDate[1]), m = parseInt(digitDate[2]), y = digitDate[3] ? parseInt(digitDate[3]) : new Date().getFullYear();
-                if (y<100) y+=2000;
-                if (d>=1 && d<=31 && m>=1 && m<=12) parsedDate = `${y}-${m.toString().padStart(2,'0')}-${d.toString().padStart(2,'0')}`;
-            }
-        }
-        
-        let clean = text.replace(/\d{1,2}[:.]\d{2}/g,'').replace(/\d{1,2}\s*часов?/g,'');
-        if (rusDate) clean = clean.replace(rusDate[0],'');
-        if (digitDate && digitDate[0]) clean = clean.replace(digitDate[0],'');
-        clean = clean.replace(/\b(на|в|запись|пожалуйста|время|дата)\b/gi,' ').replace(/\s+/g,' ').trim();
-        let finalService = clean || text.replace(/[0-9]/g,'').trim();
-        if (finalService) finalService = finalService.charAt(0).toUpperCase() + finalService.slice(1);
-        return { carService: finalService || "Автоуслуга", time: parsedTime, date: parsedDate };
-    }
-    
-    // --- ГОЛОС ---
-    let recognition = null;
-    let isListeningGlobal = false;
-    
-    function initSpeech() {
-        if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-            document.getElementById("voiceStatusBox").innerHTML = "❌ Голос не поддерживается браузером";
-            return false;
-        }
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        recognition = new SpeechRecognition();
-        recognition.lang = 'ru-RU';
-        recognition.continuous = true;
-        recognition.interimResults = true;
-        
-        recognition.onstart = () => {
-            isListeningGlobal = true;
-            const btn = document.getElementById("mainMicBtn");
-            btn.classList.add("listening");
-            btn.innerHTML = "<span>🔴</span> Слушаю... говорите развёрнуто";
-        };
-        recognition.onresult = (event) => {
-            let final = "";
-            for (let i = event.resultIndex; i < event.results.length; i++) {
-                if (event.results[i].isFinal) final += event.results[i][0].transcript;
-            }
-            if (final) {
-                document.getElementById("recognizedHint").innerHTML = `📝 Распознано: "${final}"`;
-                const parsed = parseCarServiceDateTimeFromText(final);
-                if (parsed.carService) currentCarService = parsed.carService;
-                if (parsed.time) currentTime = parsed.time;
-                if (parsed.date) currentDate = parsed.date;
-                updatePreviewUI();
-                document.getElementById("voiceStatusBox").innerHTML = `✅ Распознано: авто/услуга, время, дата. Нажмите "Подтвердить".`;
-            }
-        };
-        recognition.onerror = () => { stopListeningUI(); };
-        recognition.onend = () => { stopListeningUI(); };
-        return true;
-    }
-    
-    function stopListeningUI() {
-        if (recognition) try { recognition.stop(); } catch(e) {}
-        isListeningGlobal = false;
-        const btn = document.getElementById("mainMicBtn");
-        btn.classList.remove("listening");
-        btn.innerHTML = "<span>🎙️</span> Голосовая запись (начальник)";
-    }
-    
-    function toggleVoice() {
-        if (!isAuthorized) { showToast("Доступ запрещён", 1500); return; }
-        if (!recognition) initSpeech();
-        if (isListeningGlobal) {
-            recognition.stop();
-            stopListeningUI();
-        } else {
-            try { recognition.start(); } catch(e) { showToast("Ошибка микрофона", 2000); }
-        }
-    }
-    
-    // --- ЗАПУСК СИСТЕМЫ ---
-    document.addEventListener("DOMContentLoaded", () => {
-        checkAuthAndShow();
-        loginBtn.addEventListener("click", login);
-        logoutBtn.addEventListener("click", logout);
-        passwordInput.addEventListener("keypress", (e) => { if(e.key === "Enter") login(); });
-        document.getElementById("mainMicBtn")?.addEventListener("click", toggleVoice);
-        document.getElementById("confirmRecordBtn")?.addEventListener("click", () => addFinalRecord());
-    });
-</script>
-</body>
-</html>
+            const shortPreview = rec.fullText.length > 70 ? rec.fullText.substring(0, 70) + "…" : rec.fullText;
+            html += `<div class="record-item">
+                        <div class="record-text"><strong>🗣️ ${escapeHtml(shortPreview)}</strong><br><span style="font-size:0.7rem; color:#4f6f7e;">⏰ ${rec.extractedTime} &nbsp; 📅 ${rec.extractedDate
